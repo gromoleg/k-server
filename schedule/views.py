@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.http import Http404
+from django.views.decorators.csrf import csrf_exempt
+from .models import Faculty
 
-# Create your views here.
+
+@csrf_exempt
+def faculties(request):
+    return Faculty.get_all()
