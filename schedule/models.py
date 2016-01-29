@@ -19,14 +19,29 @@ class Faculty(models.Model):
         return ok_response(res)
 
 
+class Degree(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return self.name
+
+
 class Group(models.Model):
     faculty = models.ForeignKey(Faculty, related_name='faculty')
     name = models.CharField(blank=True, default='', max_length=300)
+    degree = models.ForeignKey(Degree, default=1, related_name='degree')
 
     def __unicode__(self):
         return '%s: %s' % (self.faculty, self.name)
 
     @staticmethod
     def get_groups_by_faculty(faculty_id):
-        res = [{'id': _group.id, 'name': _group.name} for _group in Group.objects.filter(faculty_id=faculty_id)]
-        return ok_response(res)
+        q = Group.objects.filter(faculty_id=faculty_id)
+        res = dict()
+        for _group in q:
+            name = _group.degree.name
+            if name in res:
+                res[name].append({'id': _group.id, 'name': _group.name})
+            else:
+                res[name] = [{'id': _group.id, 'name': _group.name}]
+        return ok_response([res])

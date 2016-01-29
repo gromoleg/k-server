@@ -13,7 +13,7 @@ def faculties(request):
 def groups(request):
     faculty = request.GET.get('faculty', None)
     if faculty is None:
-        return Http404
+        raise Http404
     try:
         faculty = int(faculty)
     except:
