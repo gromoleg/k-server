@@ -14,3 +14,4 @@ def response(result, error=0):
     return JsonResponse({"status": bool(error), "result": result, "error": error})
 
 status_ok = ok_response([])
+invalid_data = error_response(51, result=[])
