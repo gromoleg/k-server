@@ -143,8 +143,8 @@ type = models.PositiveIntegerField()
 
 class Teacher(models.Model):
     name = models.CharField(max_length=500)
-    surname = models.CharField(max_length=500)
     middle_name = models.CharField(max_length=500)
+    surname = models.CharField(max_length=500)
 
     def __unicode__(self):
         return '%s %s %s' % (self.surname, self.name, self.middle_name)
